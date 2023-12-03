@@ -5,7 +5,7 @@ import {Text} from 'ink';
 
 type actionType = 'input' | 'startTag' | 'endTag' | 'error';
 
-export const ReleaseTag: FC = () => {
+export const HotFixTag: FC = () => {
 	const [action, setAction] = useState<actionType>('input');
 	const [error, setError] = useState<Error | null>(null);
 	const [tagName, setTagName] = useState<string | undefined>(undefined);
@@ -15,11 +15,11 @@ export const ReleaseTag: FC = () => {
 			return (
 				<>
 					<TextInput
-						placeholder="请输入 tag 名称：例如： 2023-1-1 或 2023-1-1.1"
+						placeholder="请输入 hot fix tag 名称：例如： 2023-1-1 或 2023-1-1.1"
 						onSubmit={async name => {
 							setAction('startTag');
 							try {
-								const tagName = await releaseTag(name);
+								const tagName = await hotFixTag(name);
 								setTagName(tagName);
 							} catch (error) {
 								setError(error as Error);
@@ -53,12 +53,12 @@ export const ReleaseTag: FC = () => {
 	}
 };
 
-async function releaseTag(tagName: string) {
+async function hotFixTag(tagName: string) {
 	const checkTagName = /^\d{4}-\d{1,2}-\d{1,2}(\.\d+)?$/;
 	if (!checkTagName.test(tagName)) {
 		throw Error('tag name 不符合规范！');
 	}
-	const tagName_ = `release/${tagName}`;
+	const tagName_ = `hotFix/${tagName}`;
 	await $`git tag ${tagName_}`;
 	return tagName_;
 }

@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {Text} from 'ink';
 import {Select} from '@inkjs/ui';
 import {ReleaseTag} from './releaseTag.js';
+import {HotFixTag} from './hotFixTag.js';
+import {CreateReleaseBranch} from './createReleaseBranch.js';
 
 type Props = {
 	name: string | undefined;
@@ -15,7 +17,7 @@ type actionType =
 	| 'select';
 
 export default function App({name = 'Stranger'}: Props) {
-	console.log('🚀 ~ file: app.tsx:16 ~ App ~ name:', name);
+	name;
 	const actionOpt = [
 		{value: 'createReleaseBranch', label: 'create-release-branch'},
 		{value: 'createBUGFixBranch', label: 'create-hot-fix-branch'},
@@ -41,6 +43,15 @@ export default function App({name = 'Stranger'}: Props) {
 		}
 		case 'tag': {
 			return <ReleaseTag />;
+		}
+		case 'hotFix': {
+			return <HotFixTag />;
+		}
+		case 'createReleaseBranch': {
+			return <CreateReleaseBranch />;
+		}
+		case 'createBUGFixBranch': {
+			return null;
 		}
 		default:
 			return <Text>无选项</Text>;
